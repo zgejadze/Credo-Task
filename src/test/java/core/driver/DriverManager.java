@@ -6,6 +6,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+
+import java.time.Duration;
 
 public class DriverManager {
 
@@ -23,13 +26,23 @@ public class DriverManager {
             case "chrome" -> {
                 WebDriverManager.chromedriver().setup();
                 ChromeOptions options = new ChromeOptions();
-                options.addArguments("--force-dark-mode");
-                options.addArguments("--enable-features=WebContentsForceDark");
-                yield new ChromeDriver(options);
+                options.addArguments("--window-size=" +
+                        ConfigReader.get("SCREEN_WIDTH") + "," +
+                        ConfigReader.get("SCREEN_HEIGHT"));
+                ChromeDriver chromeDriver = new ChromeDriver(options);
+                chromeDriver.manage().timeouts().pageLoadTimeout(
+                        Duration.ofSeconds(Integer.parseInt(ConfigReader.get("PAGE_LOAD_TIMEOUT"))));
+                yield chromeDriver;
             }
             case "firefox" -> {
                 WebDriverManager.firefoxdriver().setup();
-                yield new FirefoxDriver();
+                FirefoxOptions options = new FirefoxOptions();
+                options.addArguments("--width=" + ConfigReader.get("SCREEN_WIDTH"));
+                options.addArguments("--height=" + ConfigReader.get("SCREEN_HEIGHT"));
+                FirefoxDriver firefoxDriver = new FirefoxDriver(options);
+                firefoxDriver.manage().timeouts().pageLoadTimeout(
+                        Duration.ofSeconds(Integer.parseInt(ConfigReader.get("PAGE_LOAD_TIMEOUT"))));
+                yield firefoxDriver;
             }
             default -> throw new RuntimeException("Browser not supported: " + browser);
         };

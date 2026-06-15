@@ -39,7 +39,9 @@ build/
 .DS_Store
 
 # Allure
+.allure/
 allure-results/
 allure-report/
 target/allure-results/
 target/allure-report/
+target/video/
