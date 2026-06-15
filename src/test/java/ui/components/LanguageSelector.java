@@ -11,11 +11,9 @@ import java.time.Duration;
 
 public class LanguageSelector {
 
-    private final WebDriver driver;
     private final WebDriverWait wait;
 
     public LanguageSelector(WebDriver driver) {
-        this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 

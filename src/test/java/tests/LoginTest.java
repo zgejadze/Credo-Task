@@ -17,16 +17,14 @@ import utils.AssertionHelper;
 public class LoginTest extends BaseTest {
 
     private LoginPage loginPage;
-    private LanguageSelector languageSelector;
-    private Alerts alerts;
     private SoftAssert soft;
     private AssertionHelper assertion;
 
     @BeforeMethod
     public void setUpPage(Object[] params) {
         loginPage = new LoginPage(driver);
-        languageSelector = new LanguageSelector(driver);
-        alerts = new Alerts(driver);
+        LanguageSelector languageSelector = new LanguageSelector(driver);
+        Alerts alerts = new Alerts(driver);
         soft = new SoftAssert();
         assertion = new AssertionHelper(soft, loginPage, alerts);
         if (params.length > 0) {
